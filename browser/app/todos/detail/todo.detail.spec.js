@@ -8,7 +8,7 @@ describe('Todos detail', function () {
       CONFIGURATION
   /------------------*/
 
-  beforeEach(module('angularAssessment'));
+  beforeEach(module('angularCheckpoint'));
 
   describe('controller `TodoDetailCtrl`', function(){
 
@@ -47,10 +47,10 @@ describe('Todos detail', function () {
       $rootScope = _$rootScope_;
       $injector = _$injector_;
       // a fake Todo factory (doesn't rely on your Todo factory)
-      // `getOne` method returns a promise for object with an `_id`
+      // `getOne` method returns a promise for object with an `id`
       Todo = {
         getOne: chai.spy(function (id) {
-          return $q.when({ _id: id });
+          return $q.when({ id: id });
         })
       };
     }));
@@ -79,7 +79,7 @@ describe('Todos detail', function () {
       expect(Todo.getOne).to.have.been.called.once.with(uniqueId);
       // check that the results are being returned correctly
       result.then(function(todo){
-        expect(todo).to.eql({ _id: uniqueId });
+        expect(todo).to.eql({ id: uniqueId });
       }).catch(done);
       // test framework stuff: makes settled $q promise call handler
       $rootScope.$digest();

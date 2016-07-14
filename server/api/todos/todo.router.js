@@ -3,28 +3,29 @@
 var router = require('express').Router();
 var _ = require('lodash');
 
-var Todo = require('./todo.model');
+var Todo = require('../../db/models').Todo;
 var HttpError = require('../../utils/HttpError');
 
 router.param('id', function (req, res, next, id) {
-	Todo.findById(id).exec()
+	Todo.findById(id)
 	.then(function (todo) {
 		if (todo) {
 			req.todo = todo;
 			next();
+			return null; // silence Bluebird warning re: non-returned promise in next
 		} else {
 			throw HttpError(404);
 		}
 	})
-	.then(null, next);
+	.catch(next);
 });
 
 router.get('/', function (req, res, next) {
-	Todo.find({}).exec()
+	Todo.findAll()
 	.then(function (todos) {
 		res.json(todos);
 	})
-	.then(null, next);
+	.catch(next);
 });
 
 router.get('/:id', function (req, res, next) {
@@ -36,25 +37,25 @@ router.post('/', function (req, res, next) {
 	.then(function (todo) {
 		res.status(201).json(todo);
 	})
-	.then(null, next);
+	.catch(next);
 });
 
 router.put('/:id', function (req, res, next) {
-	delete req.body._id;
+	delete req.body.id;
 	_.extend(req.todo, req.body);
 	req.todo.save()
 	.then(function (updatedTodo) {
 		res.json(updatedTodo);
 	})
-	.then(null, next);
+	.catch(next);
 });
 
 router.delete('/:id', function (req, res, next) {
-	req.todo.remove()
+	req.todo.destroy()
 	.then(function () {
 		res.status(204).end();
 	})
-	.then(null, next);
+	.catch(next);
 });
 
 module.exports = router;

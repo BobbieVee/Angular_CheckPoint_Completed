@@ -8,7 +8,7 @@ describe('Todo edit', function () {
       CONFIGURATION
   /------------------*/
 
-  beforeEach(module('angularAssessment'));
+  beforeEach(module('angularCheckpoint'));
 
   describe('controller `TodoEditCtrl`', function () {
 
@@ -17,9 +17,9 @@ describe('Todo edit', function () {
       // a new scope object we can manipulate directly
       $scope = $rootScope.$new();
       // a fake resolved `todo` (doesn't rely on your state resolve)
-      todo = { _id: '456' };
+      todo = { id: '456' };
       // a fake `Todo` factory (doesn't rely on your `Todo` factory)
-      // `update` method returns a promise for an object with an _id
+      // `update` method returns a promise for an object with an id
       Todo = {
         update: chai.spy(function (id, todo) {
           return $q.when(todo);
@@ -53,7 +53,7 @@ describe('Todo edit', function () {
         // if you are curious how this is being used,
         // check out line 4 of todo.edit.html
         $scope.keepChanges();
-        expect(Todo.update).to.have.been.called.once.with($scope.todo._id, $scope.todo);
+        expect(Todo.update).to.have.been.called.once.with($scope.todo.id, $scope.todo);
       });
 
       it("goes to the todo's detail state after it has been updated", function () {
@@ -83,10 +83,10 @@ describe('Todo edit', function () {
       $rootScope = _$rootScope_;
       $injector = _$injector_;
       // a fake Todo factory (doesn't rely on your Todo factory)
-      // `getOne` method returns a promise for object with an `_id`
+      // `getOne` method returns a promise for object with an `id`
       Todo = {
         getOne: chai.spy(function (id) {
-          return $q.when({ _id: id });
+          return $q.when({ id: id });
         })
       };
     }));
@@ -115,7 +115,7 @@ describe('Todo edit', function () {
       expect(Todo.getOne).to.have.been.called.once.with(uniqueId);
       // check that the function returned the right thing
       result.then(function(todo){
-        expect(todo).to.eql({ _id: uniqueId });
+        expect(todo).to.eql({ id: uniqueId });
       }).catch(done);
       // test framework stuff: makes settled $q promise call handler
       $rootScope.$digest();

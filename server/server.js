@@ -1,11 +1,20 @@
 'use strict';
 
-var app = require('./app/app'),
-	db = require('./db');
+var chalk = require('chalk');
 
-var port = 8080;
-var server = app.listen(port, function () {
-	console.log('Server awaiting orders on port', port, 'ma\'am/sir');
+var app = require('./app/app');
+var startDb = require('./db');
+
+function startServer () {
+  var port = 8080;
+  app.listen(port, function () {
+    console.log(chalk.blue('Server awaiting orders on port', port, 'ma\'am/sir'));
+  });
+}
+
+startDb
+.then(startServer)
+.catch(function (err) {
+  console.log(chalk.red(err.stack));
+  process.exit(1);
 });
-
-module.exports = server;

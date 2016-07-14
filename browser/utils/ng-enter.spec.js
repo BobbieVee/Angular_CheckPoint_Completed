@@ -12,7 +12,7 @@ xdescribe('ng-enter directive', function () {
   // if you are curious how this is being used,
   // check out line 6 of todo.item.html
 
-  beforeEach(module('angularAssessment'));
+  beforeEach(module('angularCheckpoint'));
 
   var ddo;
   before(function () {

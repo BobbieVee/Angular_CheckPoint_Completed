@@ -10,7 +10,7 @@ function randomNum (upperBound) {
 
 function makeFakeTodo () {
   return {
-    _id: 'xyz' + randomNum(1000),
+    id: 'xyz' + randomNum(1000),
     title: 'Thing' + randomNum(1000)
   };
 }
@@ -30,7 +30,7 @@ describe('`Todo` factory', function () {
   /------------------*/
 
   // load our Angular application from scratch
-  beforeEach(module('angularAssessment'));
+  beforeEach(module('angularCheckpoint'));
 
   // the `Todo` factory will be loaded before each test
   // $httpBackend lets us "stub" $http responses
@@ -41,7 +41,7 @@ describe('`Todo` factory', function () {
     $httpBackend = $injector.get('$httpBackend');
     fakeReqTodo = makeFakeTodo();
     fakeResTodo = {
-      _id: fakeReqTodo._id,
+      id: fakeReqTodo.id,
       title: fakeReqTodo.title,
       modification: randomNum(1000)
     };
@@ -62,9 +62,9 @@ describe('`Todo` factory', function () {
 
   it('`.getOne` fetches a backend todo by id', function (done) {
     $httpBackend
-      .expect('GET', '/api/todos/' + fakeReqTodo._id)
+      .expect('GET', '/api/todos/' + fakeReqTodo.id)
       .respond(200, fakeResTodo);
-    Todo.getOne(fakeReqTodo._id)
+    Todo.getOne(fakeReqTodo.id)
       .then(function (todo) {
         expect(todo).to.deep.equal(fakeResTodo);
       })
@@ -89,9 +89,9 @@ describe('`Todo` factory', function () {
 
   it('`.destroy` deletes an existing backend todo', function (done) {
     $httpBackend
-      .expect('DELETE', '/api/todos/' + fakeReqTodo._id)
+      .expect('DELETE', '/api/todos/' + fakeReqTodo.id)
       .respond(204);
-    Todo.destroy(fakeReqTodo._id)
+    Todo.destroy(fakeReqTodo.id)
       .catch(done);
     $httpBackend.flush();
     done();
@@ -114,9 +114,9 @@ describe('`Todo` factory', function () {
     var dueValue = randomNum(777);
     fakeResTodo.due = dueValue;
     $httpBackend
-      .expect('PUT', '/api/todos/' + fakeReqTodo._id, {due: dueValue})
+      .expect('PUT', '/api/todos/' + fakeReqTodo.id, {due: dueValue})
       .respond(200, fakeResTodo);
-    Todo.update(fakeReqTodo._id, {due: dueValue})
+    Todo.update(fakeReqTodo.id, {due: dueValue})
       .then(function (todo) {
         expect(todo).to.deep.equal(fakeResTodo);
       })
@@ -169,9 +169,9 @@ describe('`Todo` factory', function () {
         return todo !== doomedTodo;
       });
       $httpBackend
-        .when('DELETE', '/api/todos/' + doomedTodo._id)
+        .when('DELETE', '/api/todos/' + doomedTodo.id)
         .respond(204);
-      Todo.destroy(doomedTodo._id)
+      Todo.destroy(doomedTodo.id)
         .catch(done);
       $httpBackend.flush();
       expect(cachedTodos).to.deep.equal(cacheMinusDoomedTodo);

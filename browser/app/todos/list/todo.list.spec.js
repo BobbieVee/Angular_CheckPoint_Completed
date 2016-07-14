@@ -9,7 +9,7 @@ describe('Todos list', function () {
   /------------------*/
 
   // load our Angular application from scratch
-  beforeEach(module('angularAssessment'));
+  beforeEach(module('angularCheckpoint'));
 
   describe('controller `TodoListCtrl`', function () {
 
@@ -20,10 +20,10 @@ describe('Todos list', function () {
       // fake resolved `todos` (doesn't rely on your state resolve)
       todos = [];
       // a fake `Todo` factory (doesn't rely on your `Todo` factory)
-      // `add` method returns a promise for an object with an _id
+      // `add` method returns a promise for an object with an id
       Todo = {
         add: chai.spy(function () {
-          return $q.when({_id: '123'});
+          return $q.when({id: '123'});
         })
       };
       // replace `$state.go` with a func that sets a `_mockUrl` property
@@ -117,10 +117,10 @@ describe('Todos list', function () {
       $rootScope = _$rootScope_;
       $injector = _$injector_;
       // a fake Todo factory (doesn't rely on your Todo factory)
-      // `getAll` method returns a promise for objects with `_id`s
+      // `getAll` method returns a promise for objects with `id`s
       Todo = {
         getAll: chai.spy(function () {
-          return $q.when([{_id: 'a'}, {_id: 'b'}]);
+          return $q.when([{id: 'a'}, {id: 'b'}]);
         })
       };
     }));
@@ -147,7 +147,7 @@ describe('Todos list', function () {
       expect(Todo.getAll).to.have.been.called.once;
       // check that the function returned the right thing
       result.then(function(todos){
-        expect(todos).to.eql([{_id: 'a'}, {_id: 'b'}]);
+        expect(todos).to.eql([{id: 'a'}, {id: 'b'}]);
       }).catch(done);
       // test framework stuff: force $q promises to settle
       $rootScope.$digest();

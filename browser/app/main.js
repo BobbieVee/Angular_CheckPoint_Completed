@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('angularAssessment', ['ui.router']);
+var app = angular.module('angularCheckpoint', ['ui.router']);
 
 app.config(function ($urlRouterProvider, $locationProvider, $httpProvider) {
   // remove '#' from urls

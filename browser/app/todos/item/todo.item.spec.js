@@ -8,7 +8,7 @@ describe('Todo item', function () {
       CONFIGURATION
   /------------------*/
 
-  beforeEach(module('angularAssessment'));
+  beforeEach(module('angularCheckpoint'));
 
   describe('directive `todoItem`', function () {
 
@@ -92,13 +92,13 @@ describe('Todo item', function () {
         // if you are curious how this is being used,
         // check out line 8 of todo.item.html
         var uniqueId = {};
-        $scope.theTodo = { _id: uniqueId };
+        $scope.theTodo = { id: uniqueId };
         $scope.removeTodo();
         expect(Todo.destroy).to.have.been.called.once.with(uniqueId);
       });
 
       it('after removal, goes to the `todos` state', function () {
-        $scope.theTodo = { _id: 'abc123' };
+        $scope.theTodo = { id: 'abc123' };
         $scope.removeTodo();
         // don't transition yet; the `destroy` promise hasn't settled!
         expect($state._mockUrl).not.to.equal('/todos');
