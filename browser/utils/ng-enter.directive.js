@@ -16,4 +16,5 @@
 
 app.directive('ngEnter', ngEnterDirective = function () {
   // your code here
+  return {};
 });
