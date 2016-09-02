@@ -96,8 +96,9 @@ describe('Todo edit', function () {
     /------------------*/
 
     it('url compiles correctly', function () {
-      var url = $state.href('todos.edit', {id: '123'});
-      expect(url).to.equal('/todos/123/edit');
+      var randomId = Math.floor(Math.random() * 1e5);
+      var url = $state.href('todos.edit', {id: randomId});
+      expect(url).to.equal('/todos/' + randomId + '/edit');
     });
 
     it('resolves with a specific `todo` from the `Todo` factory', function (done) {

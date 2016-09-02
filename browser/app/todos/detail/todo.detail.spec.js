@@ -60,8 +60,9 @@ describe('Todos detail', function () {
     /------------------*/
 
     it('url compiles correctly', function () {
-      var url = $state.href('todos.detail', {id: '123'});
-      expect(url).to.equal('/todos/123');
+      var randomId = Math.floor(Math.random() * 1e5);
+      var url = $state.href('todos.detail', {id: randomId});
+      expect(url).to.equal('/todos/' + randomId);
     });
 
     it('resolves with a specific `todo` from the `Todo` factory', function (done) {
