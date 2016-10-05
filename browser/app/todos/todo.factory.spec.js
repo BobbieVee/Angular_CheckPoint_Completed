@@ -104,6 +104,7 @@ describe('`Todo` factory', function () {
     Todo.add(fakeReqTodo)
       .then(function (todo) {
         expect(todo).to.deep.equal(fakeResTodo);
+
       })
       .catch(done);
     $httpBackend.flush();
